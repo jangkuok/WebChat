@@ -1,0 +1,20 @@
+package com.webchat.redis;
+
+import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.connection.MessageListener;
+
+import java.io.UnsupportedEncodingException;
+
+public class RedisMessageListener implements MessageListener {
+
+    @Override
+    public void onMessage(Message message, byte[] pattern) {
+        try {
+            System.out.println("Message received: " + message + ", " + new String(pattern, "UTF-8"));
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+}

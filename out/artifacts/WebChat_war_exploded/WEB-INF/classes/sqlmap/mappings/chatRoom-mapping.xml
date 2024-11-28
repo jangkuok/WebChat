@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webchat.mapper.ChatRoomMapper">
+
+    <!--  채팅방  -->
+    <resultMap id="chatRoomResult" type="ChatRoomVo">
+        <id property="roomNo" column="roomNo"/>
+        <result property="roomName" column="roomName"/>
+    </resultMap>
+
+    <!--  채팅방 + 메세지  -->
+    <resultMap id="chatRoom-message" type="ChatRoomVo" extends="chatRoomResult">
+        <collection property="chatRoomMessageVoList" ofType="ChatRoomMessageVo">
+            <id property="messageNo" column="messageNo"/>
+            <result property="code" column="code"/>
+            <result property="id" column="id"/>
+            <result property="receiver" column="receiver"/>
+            <result property="content" column="content"/>
+            <result property="sendDate" column="sendDate"/>
+        </collection>
+    </resultMap>
+
+    <!-- 채팅방 생성 -->
+    <insert id="insertChatRoom" parameterType="ChatRoomVo">
+        INSERT INTO chatroom
+        VALUES (nextval('seq_chatroom'), #{roomName}, #{leaderId});
+    </insert>
+
+    <!--  채팅방 제목 수정  -->
+    <update id="updateChatRoom" parameterType="ChatRoomVo">
+        UPDATE chatroom
+        SET roomname = #{roomName}
+        WHERE roomno = #{roomNo}
+    </update>
+
+    <delete id="deleteChatRoom" parameterType="int">
+        DELETE
+        FROM chatroom
+        WHERE roomno = #{roomNo}
+    </delete>
+
+    <select id="selectChatRoomList" resultMap="chatRoom-message">
+        SELECT *
+        FROM chatroom c
+                 LEFT OUTER JOIN (
+            SELECT *
+            FROM(
+                    SELECT *
+                    FROM CHATROOMMESSAGE
+                    WHERE messageNo
+                              IN (
+                              SELECT max(messageNo)
+                              FROM CHATROOMMESSAGE
+                              GROUP BY roomNo
+                          )
+                )
+        ) m
+                            ON c.roomno = m.roomno
+        ORDER BY c.roomno DESC ;
+    </select>
+
+    <select id="selectChatRoomMessageList" parameterType="int" resultMap="chatRoom-message">
+        SELECT *
+        FROM chatroom c
+        LEFT OUTER JOIN chatroommessage m
+        ON c.roomno = m.roomno
+        WHERE  c.roomno = #{roomno}
+        ORDER BY m.messageno ASC
+    </select>
+
+
+</mapper>

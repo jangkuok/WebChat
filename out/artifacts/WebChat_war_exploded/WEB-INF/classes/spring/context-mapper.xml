@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Spring과 MyBatis 연동 설정 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/sqlmap/sql-mapper-config.xml"/>
+        <property name="mapperLocations" value="classpath:sqlmap/mappings/*-mapping.xml"/>
+    </bean>
+
+    <!-- MyBatis의 SQL 매핑 관련 작업을 수행하는 객체 (mapper) 경로 설정 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.webchat.mapper"/>
+    </bean>
+
+</beans>

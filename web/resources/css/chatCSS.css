@@ -1,0 +1,116 @@
+html, body {
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: #FFF !important;
+    display: block;
+    overflow: hidden;
+}
+
+body > div {
+    margin: 0;
+    padding: 0;
+    background: #bacee0;
+}
+
+#main {
+    width: 400px;
+    height: 510px;
+    margin: 3px;
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+}
+#header > h2 {
+    background: #bacee0;
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+/*채팅 창 배경*/
+#list {
+    border: 1px solid var(--border-color);
+    background: #bacee0;
+    box-sizing: content-box;
+    padding: .5rem;
+    grid-row-start: 2;
+    grid-row-end: 12;
+    font-size: 14px;
+    overflow: auto;
+}
+
+#msg {
+    margin-top: 3px;
+}
+
+#list .item {
+    font-size: 14px;
+    margin: 15px 0;
+}
+
+#list .item > div:first-child {
+    font-size: 12px;
+}
+
+#list .item.me > div:first-child {
+    justify-content: flex-end;
+}
+
+
+#list .item.other > div:first-child {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+/*닉네임*/
+#list .item > div:first-child > div:first-child {
+    font-size: 10px;
+    color: #777;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+/*채팅 박스 설정*/
+#list .item > div:first-child > div:nth-child(2) {
+    display: inline-block;
+    max-width: 250px;
+    text-align: center;
+    padding: 3px 7px;
+    border-radius: 5px;
+}
+
+/*입장 알림*/
+#list .state.item > div:first-child > div:nth-child(2) {
+    /*background-color: #EEE;*/
+    font-size: x-small;
+    text-align: center;
+}
+
+/*날짜*/
+#list .item > div:last-child {
+    font-size: 9px;
+    color: #777;
+    margin: 3px 5px;
+}
+
+#list .me {
+    text-align: right;
+}
+
+#list .other {
+    text-align: left;
+}
+
+/*내가 친 채팅*/
+#list .msg.me.item > div:first-child > div:nth-child(2) {
+    background-color:rgb(255,235,51);
+}
+
+/*상대방 채팅*/
+#list .msg.other.item > div:first-child > div:nth-child(2) {
+    background-color: rgb(255, 255, 255);
+}
+
+#list .msg img {
+    width: 150px;
+}
