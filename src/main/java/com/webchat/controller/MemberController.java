@@ -1,6 +1,5 @@
 package com.webchat.controller;
 
-import com.webchat.config.SessionConfig;
 import com.webchat.service.ChatRoomService;
 import com.webchat.service.MemberService;
 import com.webchat.vo.ChatRoomVo;
@@ -18,11 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @Log4j
@@ -47,8 +42,7 @@ public class MemberController {
         MemberVo vo = memberService.selectMemberId(memberVo.getId());
 
         if (vo != null && vo.getPw().equals(memberVo.getPw())) {
-            String id = SessionConfig.getSessionCheck("id", vo.getId());
-            System.out.println("로그인 체크 : " + id);
+            System.out.println("로그인 체크 : " + vo.getId());
             session.setAttribute("id", vo.getId());
             session.setAttribute("nickName", vo.getNickName());
             session.setMaxInactiveInterval(60*10);

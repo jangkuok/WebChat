@@ -14,6 +14,4 @@
     <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:hostName="127.0.0.1" p:port="6379"/>
 
 
-
-
 </beans>

@@ -9,19 +9,11 @@
        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 
-    <bean id="chatHandler" class="com.webchat.handler.ChatHandler"/>
-
-    <websocket:handlers>
-        <websocket:mapping handler="chatHandler" path="/chat"/>
-        <websocket:sockjs/>
-    </websocket:handlers>
-
-    <bean id="messageListenerAdapter" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
-        <constructor-arg>
-            <bean class="com.webchat.redis.RedisMessageListener"/>
-        </constructor-arg>
-
-    </bean>
-
-
+    <!-- WebSocket 설정 -->
+    <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/ws">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:simple-broker prefix="/topic"/>
+    </websocket:message-broker>
 </beans>
